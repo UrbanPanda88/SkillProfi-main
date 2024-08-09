@@ -1,0 +1,22 @@
+﻿<Window x:Class="SkillProfiWPF.ContactsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Contacts" Height="450" Width="800">
+    <Grid>
+        <ListBox ItemsSource="{Binding Contacts}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Adress}" FontWeight="Bold" FontSize="18"/>
+                        <TextBlock Text="{Binding Email}" TextWrapping="Wrap" FontSize="16"/>
+                        <TextBlock Text="{Binding PhoneNumber}" TextWrapping="Wrap" FontSize="16"/>
+                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" FontSize="16"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>

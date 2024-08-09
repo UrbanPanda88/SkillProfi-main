@@ -1,0 +1,39 @@
+﻿@model List<SkillProfi.Models.BlogPost>
+
+@{
+    ViewData["Title"] = "Blog";
+}
+
+<h1>@ViewData["MenuTitle"]</h1>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+        <a href="@Url.Action("Create")">Добавить блог</a>
+    </p>
+}
+
+<div class="row">
+    @foreach (var post in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img class="card-img-top" src="@Url.Content("~/images/" + post.ImageUrl)" asp-append-version="true" alt="@post.Title">
+                <div class="card-body">
+                    <h5 class="card-title">@post.Title</h5>
+                    <p class="card-text">@post.Description</p>
+                    <p class="text-muted">@post.PublishDate.ToString("dd MMM yyyy")</p>
+                    <a href="@Url.Action("Post", "Blog", new { id = post.Id })" class="btn btn-primary">Читать далее</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="@Url.Action("Edit", "Blog", new { id = post.Id })" class="btn btn-secondary">Редактировать</a>
+                        <form asp-action="Delete" method="post" class="delete-form d-inline-block align-middle">
+                            <input type="hidden" name="id" value="@post.Id" />
+                            <input type="submit" value="Удалить" onclick="return confirm('Вы уверены?');" class="btn btn-danger" />
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

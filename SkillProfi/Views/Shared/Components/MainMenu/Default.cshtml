@@ -1,0 +1,35 @@
+﻿@using SkillProfi.Models
+@model List<MenuTitles>
+
+@foreach (var menuTitle in Model)
+{
+    if (menuTitle.Name != null && menuTitle.WelcomeMessage == null && menuTitle.ActionCallText == null)
+    {
+        <li>
+            <a href="@Url.Action(menuTitle.LinkAction, menuTitle.LinkController)">@menuTitle.Name</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href="@Url.Action("EditMenuTitle", "MenuContent", new { id = menuTitle.Id })" class="btn btn-secondary btn-sm">Редактировать</a>
+            }
+        </li>
+
+    }
+}
+
+<h1 id="welcomeText">
+    @ViewData["WelcomeMessage"]
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a href="@Url.Action("EditWelcomeMessage", "Home")" class="btn btn-secondary btn-sm">Редактировать</a>
+    }
+</h1>
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <li><a href="@Url.Action("Login", "Account")" class="btn btn-primary btn-sm">Войти</a></li>
+}
+else
+{
+    <li><a href="@Url.Action("Logout", "Account")" class="btn btn-danger btn-sm">Выйти</a></li>
+    <li><a href="@Url.Action("Index", "Dashboard")" class="btn btn-primary btn-sm">Рабочий стол</a></li>
+}

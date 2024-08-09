@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Contact>
+
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<h2>@ViewData["MenuTitle"]</h2>
+
+@foreach (var contact in Model)
+{
+    <div class="contact-info">
+        <p><strong>@contact.Adress</strong></p>
+        <p><strong>Email:</strong> @contact.Email</p>
+        <p><strong>Тел:</strong> @contact.PhoneNumber</p>
+        <p><strong>ФИО:</strong> @contact.Name</p>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-action="Edit" asp-route-id="@contact.Id">Редактировать</a>
+            <form asp-action="Delete" method="post" class="delete-form d-inline-block align-middle">
+                <input type="hidden" name="id" value="@contact.Id" />
+            <input type="submit" value="Удалить" onclick="return confirm('Вы уверены?');" class="btn btn-danger" />
+        </form>
+        }
+    </div>
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <a asp-action="Create">Добавить новый контакт</a>
+}
+

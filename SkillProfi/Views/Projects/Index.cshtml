@@ -1,0 +1,32 @@
+﻿@model List<SkillProfi.Models.Project>
+@{
+    ViewData["Title"] = "Проекты";
+}
+<h2>@ViewData["MenuTitle"]</h2>
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+        <a href="@Url.Action("Create")">Добавить проект</a>
+    </p>
+}
+
+@foreach (var project in Model)
+{
+    <a href="@Url.Action("Details", "Projects", new { id = project.Id })">
+        <div>
+            <img src="@Url.Content("~/images/" + project.ImageUrl)" alt="@project.Title" width="100" />
+            <h3>@project.Title</h3>
+        </div>
+    </a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="project-actions">
+            <a href="@Url.Action("Edit", "Projects", new { id = project.Id })" class="btn btn-primary">Редактировать</a>
+            <form asp-action="Delete" method="post" class="delete-form d-inline-block align-middle">
+                <input type="hidden" name="id" value="@project.Id" />
+                <input type="submit" value="Удалить" onclick="return confirm('Вы уверены?');" class="btn btn-danger" />
+            </form>
+        </div>
+    }
+}
+

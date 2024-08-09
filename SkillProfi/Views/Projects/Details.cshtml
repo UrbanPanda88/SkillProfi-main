@@ -1,0 +1,11 @@
+﻿@model SkillProfi.Models.Project
+
+@{
+    ViewData["Title"] = "Детали проекта";
+}
+
+<article class="project-details">
+    <h2>@Model.Title</h2>
+    <img src="@Url.Content("~/images/" + Model.ImageUrl)" alt="Изображение @Model.Title" />
+    <p>@Model.Description</p>
+</article>

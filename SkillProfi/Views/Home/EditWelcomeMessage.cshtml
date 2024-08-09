@@ -1,0 +1,15 @@
+﻿@model SkillProfi.Models.MenuTitles
+
+<form asp-action="EditWelcomeMessage" method="post">
+    <input asp-for="Id" type="hidden" />
+    <div class="form-group">
+        <label asp-for="WelcomeMessage">Приветственное сообщение</label>
+        <textarea asp-for="WelcomeMessage" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="ActionCallText">Текст призыва к действию</label>
+        <input asp-for="ActionCallText" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+</form>
+

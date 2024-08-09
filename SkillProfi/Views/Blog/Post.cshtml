@@ -1,0 +1,8 @@
+﻿@model SkillProfi.Models.BlogPost
+
+<h1>@Model.Title</h1>
+<img src="@Url.Content("~/images/" + Model.ImageUrl)" alt="@Model.Title" class="card-img-top">
+<p class="text-muted">@Model.PublishDate.ToString("dd MMM yyyy")</p>
+<article>
+    @Model.Content
+</article>

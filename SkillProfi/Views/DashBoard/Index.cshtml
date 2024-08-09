@@ -1,0 +1,103 @@
+﻿@model DashboardViewModel
+
+@{
+    ViewData["Title"] = "Панель управления";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="btn-group" role="group" aria-label="Quick filters">
+    <a class="btn btn-primary" href="@Url.Action("Index", new { filter = "today" })">Сегодня</a>
+    <a class="btn btn-primary" href="@Url.Action("Index", new { filter = "yesterday" })">Вчера</a>
+    <a class="btn btn-primary" href="@Url.Action("Index", new { filter = "week" })">Неделя</a>
+    <a class="btn btn-primary" href="@Url.Action("Index", new { filter = "month" })">Месяц</a>
+</div>
+
+<form method="get" action="@Url.Action("Index")">
+    <div class="form-group">
+        <label for="startDate">Начало периода:</label>
+        <input type="date" id="startDate" name="startDate">
+
+        <label for="endDate">Конец периода:</label>
+        <input type="date" id="endDate" name="endDate">
+
+        <button type="submit">Применить</button>
+    </div>
+</form>
+
+<h3>Статистика по статусам:</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Статус</th>
+            <th>Количество</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entry in Model.RequestsByStatus)
+        {
+            <tr>
+                <td>@entry.Key</td>
+                <td>@entry.Value.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Список заявок:</h3>
+
+@foreach (var entry in Model.RequestsByStatus)
+{
+    if (entry.Value.Count > 0)
+    {
+        <h4>@GetStatusTitle(entry.Key)</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Сообщение</th>
+                    <th>Статус</th>
+                    <th>Изменить статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in entry.Value.Requests)
+                {
+                    <tr>
+                        <td>@request.Id</td>
+                        <td>@request.FullName</td>
+                        <td>@request.Email</td>
+                        <td>@request.Message</td>
+                        <td>@request.Status</td>
+                        <td>
+                            <a href="@(Url.Action("ChangeStatus", "DashBoard", new { id = request.Id }))">Изменить</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@functions {
+    public string GetStatusTitle(RequestStatus status)
+    {
+        switch (status)
+        {
+            case RequestStatus.Received:
+                return "Ожидающие заявки";
+            case RequestStatus.InProgress:
+                return "Заявки в процессе";
+            case RequestStatus.Completed:
+                return "Завершенные заявки";
+            case RequestStatus.Rejected:
+                return "Отклоненные заявки";
+            case RequestStatus.Canceled:
+                return "Отмененные заявки";
+            default:
+                return string.Empty;
+        }
+    }
+}

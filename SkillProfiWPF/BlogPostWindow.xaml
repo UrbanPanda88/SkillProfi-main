@@ -1,0 +1,29 @@
+﻿<Window x:Class="SkillProfiWPF.BlogPostWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:SkillProfiWPF"
+        Title="BlogPost" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Window.Resources>
+        <local:ImagePathConverter x:Key="ImagePathConverter"/>
+    </Window.Resources>
+    <ScrollViewer>
+        <Grid>
+            <ItemsControl ItemsSource="{Binding BlogPosts}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Viewbox>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="18"/>
+                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" FontSize="16" Height="Auto" MaxHeight="200"/>
+                                <TextBlock Text="{Binding Content}" TextWrapping="Wrap" FontSize="16" Height="Auto" MaxHeight="200"/>
+                                <TextBlock Text="{Binding PublishDate}" TextWrapping="Wrap" FontSize="16" Height="Auto" MaxHeight="200"/>
+                                <Image Source="{Binding ImageUrl, Converter={StaticResource ImagePathConverter}}" Stretch="UniformToFill" HorizontalAlignment="Stretch"/>
+                            </StackPanel>
+                        </Viewbox>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+    </ScrollViewer>
+</Window>
